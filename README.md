@@ -1,7 +1,7 @@
 # Apple
 
 ```bash
-composer require feilongluo/apple
+composer require feilongluo/apple:v4.0.1
 ```
 
 ## Installation & Basic Usage
