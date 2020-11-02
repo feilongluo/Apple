@@ -1,7 +1,7 @@
 # Apple
 
 ```bash
-composer require socialiteproviders/apple
+composer require feilongluo/apple
 ```
 
 ## Installation & Basic Usage

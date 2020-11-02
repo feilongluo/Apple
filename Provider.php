@@ -48,7 +48,7 @@ class Provider extends AbstractProvider
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase(self::URL.'/auth/authorize', $state);
+        return $this->buildAuthUrlFromBase(self::URL . '/auth/authorize', $state);
     }
 
     /**
@@ -56,7 +56,7 @@ class Provider extends AbstractProvider
      */
     protected function getTokenUrl()
     {
-        return self::URL.'/auth/token';
+        return self::URL . '/auth/token';
     }
 
     /**
@@ -65,16 +65,16 @@ class Provider extends AbstractProvider
     protected function getCodeFields($state = null)
     {
         $fields = [
-            'client_id'     => $this->clientId,
-            'redirect_uri'  => $this->redirectUrl,
-            'scope'         => $this->formatScopes($this->getScopes(), $this->scopeSeparator),
+            'client_id' => $this->clientId,
+            'redirect_uri' => $this->redirectUrl,
+            'scope' => $this->formatScopes($this->getScopes(), $this->scopeSeparator),
             'response_type' => 'code',
             'response_mode' => 'form_post',
         ];
 
         if ($this->usesState()) {
             $fields['state'] = md5($state);
-            $fields['nonce'] = Str::uuid().'.'.$state;
+            $fields['nonce'] = Str::uuid() . '.' . $state;
         }
 
         return array_merge($fields, $this->parameters);
@@ -86,8 +86,8 @@ class Provider extends AbstractProvider
     public function getAccessTokenResponse($code)
     {
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'headers'        => ['Authorization' => 'Basic '.base64_encode($this->clientId.':'.$this->clientSecret)],
-            'form_params'    => $this->getTokenFields($code),
+            'headers' => ['Authorization' => 'Basic ' . base64_encode($this->clientId . ':' . $this->clientSecret)],
+            'form_params' => $this->getTokenFields($code),
         ]);
 
         return json_decode($response->getBody(), true);
@@ -127,7 +127,7 @@ class Provider extends AbstractProvider
     {
         $signer = new Sha256();
 
-        $token = (new Parser())->parse((string) $jwt);
+        $token = (new Parser())->parse((string)$jwt);
 
         if ($token->getClaim('iss') !== self::URL) {
             throw new InvalidStateException('Invalid Issuer', Response::HTTP_UNAUTHORIZED);
@@ -137,9 +137,9 @@ class Provider extends AbstractProvider
         }
 
         $data = Cache::remember('socialite:Apple-JWKSet', 5 * 60, function () {
-            $res = (new Client())->get(self::URL.'/auth/keys');
+            $res = (new Client())->get(self::URL . '/auth/keys');
 
-            return json_decode((string) $res->getBody(), true);
+            return json_decode((string)$res->getBody(), true);
         });
 
         $publicKeys = JWK::parseKeySet($data);
@@ -196,7 +196,7 @@ class Provider extends AbstractProvider
      */
     protected function mapUserToObject(array $user)
     {
-        $value = trim((string) request('user'));
+        $value = trim((string)request('user'));
 
         if ($value !== '') {
             $userRequest = json_decode($value, true);
@@ -205,8 +205,8 @@ class Provider extends AbstractProvider
                 $user['name'] = $userRequest['name'];
                 $fullName = trim(
                     ($user['name']['firstName'] ?? '')
-                    .' '
-                    .($user['name']['lastName'] ?? '')
+                    . ' '
+                    . ($user['name']['lastName'] ?? '')
                 );
             }
         }
@@ -214,8 +214,8 @@ class Provider extends AbstractProvider
         return (new User())
             ->setRaw($user)
             ->map([
-                'id'    => $user['sub'],
-                'name'  => $fullName ?? null,
+                'id' => $user['sub'],
+                'name' => $fullName ?? null,
                 'email' => $user['email'] ?? null,
             ]);
     }

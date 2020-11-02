@@ -1,6 +1,6 @@
 {
-    "name": "socialiteproviders/apple",
-    "description": "Apple OAuth2 Provider for Laravel Socialite",
+    "name": "feilongluo/apple",
+    "description": "Apple OAuth2 Provider for Laravel Socialite. Support php 7.1 and laravel 5.6, revision.",
     "license": "MIT",
     "authors": [
         {
@@ -13,15 +13,20 @@
             "email": "vamsi@vonectech.com",
             "homepage": "https://vonectech.com/",
             "role": "Farmer"
+        },
+        {
+            "name": "luolongfei",
+            "email": "mybsdc@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.1",
         "ext-json": "*",
         "ext-openssl": "*",
-        "firebase/php-jwt": "^5.2",
-        "lcobucci/jwt": "^3.3",
-        "socialiteproviders/manager": "~4.0"
+        "firebase/php-jwt": "~3.0|~4.0|~5.0",
+        "lcobucci/jwt": "^3.1",
+        "socialiteproviders/manager": "~2.0 || ~3.0"
     },
     "autoload": {
         "psr-4": {
