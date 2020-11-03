@@ -35,7 +35,7 @@
     },
     "minimum-stability": "stable",
     "suggest": {
-        "ahilmurugesan/socialite-apple-helper": "Automatic Apple client key generation and management."
+        "feilongluo/socialite-apple-helper": "Automatic Apple client key generation and management."
     },
     "keywords": [
         "laravel",
